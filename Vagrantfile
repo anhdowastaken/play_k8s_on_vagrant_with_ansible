@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "#{name}"
       node.vm.network "private_network", ip: "#{ip}", auto_config: true
 
-      config.vm.provider "virtualbox" do |vb|
+      node.vm.provider "virtualbox" do |vb|
         vb.name = "#{name}"
         vb.gui = false
         vb.memory = $vm_memory
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
       end
 
       if i == $instance_count
-        config.vm.provision "ansible_local" do |ansible|
+        node.vm.provision "ansible_local" do |ansible|
           ansible.playbook = "playbook.yml"
           ansible.inventory_path = "inventory/vagrant/hosts.ini"
           ansible.become = true

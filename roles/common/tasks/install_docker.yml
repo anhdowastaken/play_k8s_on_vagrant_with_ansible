@@ -14,7 +14,7 @@
 - name: Install docker engine
   when: ansible_os_family == "RedHat"
   yum:
-    name: "docker-ce-{{ docker_version }}"
+    name: "docker-ce"
     state: present
 
 - name: Enable and check Docker service
@@ -24,3 +24,15 @@
     state: started
     enabled: yes
 
+# https://stackoverflow.com/a/68722458/483740
+- name: Copy "/etc/docker/daemon.json" to nodes
+  copy:
+    src: "daemon.json"
+    dest: "/etc/docker/daemon.json"
+    mode: 0644
+
+- name: Restart Docker service
+  systemd:
+    name: docker
+    daemon_reload: yes
+    state: restarted

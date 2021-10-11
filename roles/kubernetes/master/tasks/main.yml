@@ -32,15 +32,15 @@
     mode: 0755
     remote_src: true
 
-- name: Install flannel network add-on
-  when: kubeadm_init is succeeded and not kubeadm_already_run.stat.exists
-  command: |
-    kubectl --kubeconfig=/etc/kubernetes/admin.conf \
-      apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
+# - name: Install flannel network add-on
+#   when: kubeadm_init is succeeded and not kubeadm_already_run.stat.exists
+#   command: |
+#     kubectl --kubeconfig=/etc/kubernetes/admin.conf \
+#       apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
 
-- name: Deploy kubernetes dashboard into cluster
-  when: kubeadm_init is succeeded and not kubeadm_already_run.stat.exists
-  command: |
-    kubectl --kubeconfig=/etc/kubernetes/admin.conf \
-      apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+# - name: Deploy kubernetes dashboard into cluster
+#   when: kubeadm_init is succeeded and not kubeadm_already_run.stat.exists
+#   command: |
+#     kubectl --kubeconfig=/etc/kubernetes/admin.conf \
+#       apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
 

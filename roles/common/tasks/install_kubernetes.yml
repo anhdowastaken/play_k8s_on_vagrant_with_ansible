@@ -24,6 +24,16 @@
     disable_excludes: kubernetes
     state: present
 
+# FIXME: Fix hard-code "10.10.10."
+- name: Assign node ip to variable
+  command: bash -c "ip a s eth1 | grep -oP '10.10.10.\d+/24' | grep -oP '10.10.10.\d+'"
+  register: node_ip
+
+- name: Configure node use private network as primary interface
+  lineinfile:
+    path: /etc/sysconfig/kubelet
+    line: "KUBELET_EXTRA_ARGS=--node-ip={{ node_ip.stdout }}"
+
 - name: Enable and check kubelet service
   when: ansible_os_family == "RedHat"
   systemd:
